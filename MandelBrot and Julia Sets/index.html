@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MandelBrot & Julia Sets</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container-fluid text-white bg-primary row offset-md-0">
+       <div id="mandelForm" class="from-group col-md-6 my-3">
+            <label for="iterationsMB">Maximum number of Iterations:</label>
+            <input 
+                   type="number" 
+                   id="iterationsMB" 
+                   class="form-control" 
+                   value="100">
+            <label for="upperBoundMB">Upper Bound:</label>
+            <input type="number" 
+                   id="upperBoundMB" 
+                   class="form-control" 
+                   value="2"><br>
+            <center>
+                <input type="button" 
+                       value="Plot MandelBrot Set" 
+                       class="btn btn-success" 
+                       onclick="plotMandelBrot()">
+            </center>
+            <label for="scaleForm">Zoom(Double Click to zoom):</label>
+            <div id="scaleForm" class="container-fluid row">
+                <label class="col-md-5">Scaling Factor: </label>
+                <input type="number" 
+                       value="2"
+                       id="scalingFactor"
+                       step = "0.01"
+                       class="form-control col-md-7">
+            </div>
+            <center>
+                <input type="button" 
+                       value="Reset Scaling" 
+                       class="btn btn-success" 
+                       onclick="reset()">
+            </center>
+        </div>
+        
+<!--        Julia Set Form-->
+        <div class="col-md-6 form-group my-3">
+            <!--Iteration Parameters-->
+            <label for="iterationsJulia">Maximum number of Iterations:</label>
+            <input type="number"
+                   id="iterationsJulia"
+                   class="form-control"
+                   value="100">
+            <label for="upperBound">Upper Bound:</label>
+            <input type="number"
+                   id="upperBoundJulia"
+                   class="form-control"
+                   value="2"><br>
+            <label for="constant" class="form-check-label">Constant:</label>
+            <div id="constant">
+                <label class="form-check-label">
+                <input type="radio"
+                       id="cartesian"
+                       name="system"
+                       checked="true">
+                       Cartesian System:
+                </label>    
+                <!--Cartesian Constant-->
+<!--
+                <div class="row container-fluid">
+                    <input type="range"
+                           id="cReal"
+                           class="form-control col-md-5"
+                           min="-1"
+                           max="1"
+                           value="0"
+                           step="0.001"
+                           onchange="updateVal(this.value,'cRealDisplay')"><hr>+<hr>
+                    <input type="range"
+                           id="cComplex"
+                           class="form-control col-md-5"
+                           min="-1"
+                           max="1"
+                           value="0"
+                           step="0.001"
+                           onchange="updateVal(this.value,'cComplexDisplay')"><hr>i<br>
+                </div>
+-->
+                <div class="row container-fluid">
+                    <input type="number"
+                           value="0"
+                           class="form-control col-md-5" 
+                           id="cReal"
+                           step="0.1">
+                    <hr>+<hr>
+                    <input type="number" 
+                           value="0"
+                           class="form-control col-md-5" 
+                           id="cComplex"
+                           step="0.1">
+                    <hr>i
+                </div><br>
+                <!--Polar Constant-->
+                <label class="form-check-label">
+                <input type="radio"
+                       id="polar"
+                       name="system"
+                       >Polar System:
+                </label> 
+<!--
+                <div class="row container-fluid">
+                    r = <hr><hr><hr>
+                    <input type="range"
+                           id="cReal"
+                           class="form-control col-md-5"
+                           min="-2"
+                           max="1"
+                           value="0"
+                           step="0.001"
+                           onchange="updateVal(this.value,'cRealDisplay')"><hr>θ = <hr><hr>
+                    <input type="range"
+                           id="cComplex"
+                           class="form-control col-md-5"
+                           min="0"
+                           max="2"
+                           value="0"
+                           step="0.001"
+                           onchange="updateVal(this.value,'cComplexDisplay')"><br>
+                </div>
+-->
+                <div class="row container-fluid">
+                    r =<hr>
+                    <input type="number"
+                           value="0"
+                           class="form-control col-md-5" 
+                           id="cR"
+                           min="0"
+                           max="2"
+                           step="0.01">
+                    <hr>θ =<hr>
+                    <input type="number" 
+                           value="0"
+                           class="form-control col-md-5" 
+                           id="cTheta"
+                           min=0
+                           max="2"
+                           step="0.01">
+                    * PI
+                </div><br>
+            </div>
+            <center>
+                <input type="button" 
+                       value="Plot Julia Set" 
+                       class="btn btn-success" 
+                       onclick="plotJulia()">
+            </center>
+        </div>
+    </div>
+    
+<!--    javascript-->
+    <script src="../p5.js"></script>
+    <script src="../addons/p5.sound.min.js"></script>
+    <script src="sketch.js"></script>
+</body>
+
+</html>
