@@ -32,7 +32,7 @@
                 <input type="button" 
                        value="Plot MandelBrot Set" 
                        class="btn btn-success" 
-                       onclick="plotMandelBrot()">
+                       onclick="setup()">
             </center>
             <label for="scaleForm">Zoom(Double Click to zoom):</label>
             <div id="scaleForm" class="container-fluid row">
@@ -160,14 +160,20 @@
                 <input type="button" 
                        value="Plot Julia Set" 
                        class="btn btn-success" 
-                       onclick="plotJulia()">
+                       onclick="setup()">
             </center>
         </div>
+    </div>
+    <div id="sketchContainer" style="width: 100%;height: width;">
+
     </div>
     
 <!--    javascript-->
     <script src="../p5.js"></script>
     <script src="../addons/p5.sound.min.js"></script>
+    <script src="MandelBrotPlot.js"></script>
+    <script src="JuliaPlot.js"></script>
+    <script src="MandelBrotWorker.js"></script>
     <script src="sketch.js"></script>
 </body>
 

@@ -1,167 +1,98 @@
-//iterating variables
-var realPart;
-var complexPart;
-var realPartNext;
-var complexPartNext;
-var iterations;
+// import MandelBrotPlot from "MandelBrotPlot.js"
 
-//pixel variables
-var pixelIndex;
-var colorVal;
 
-//Plot parameters
-var upperBound;
-var cReal;
-var cComplex;
+// function draw() {
+//     console.log(innerWidth);
+//  // put drawing code here
+// }
 
-//scaling variables for MandelBrot
-var newWidth;
-var newHeight;
-var xMax = 0.7;
-var xMin = -2;
-var yMax = 1.35;
-var yMin = -1.35;
-var isJulia;
+// function reset(){
+//     xMax = 0.7;
+//     xMin = -2;
+//     yMax = 1.35;
+//     yMin = -1.35;
+// }
 
-function setup() {
-    console.log(width);
-    isJulia = false;
-    plotMandelBrot();
-}
+// function doubleClicked(){
+//     var mouseX_ = map(mouseX, 0, width, xMin, xMax);
+//     var mouseY_ = map(mouseY, 0, height, yMax, yMin);
+//     var scale = parseFloat(document.getElementById("scalingFactor").value)
+//     console.log(scale);
+//     xMax = mouseX_ + ((xMax-xMin)/scale)/2;
+//     xMin = mouseX_ - ((xMax-xMin)/scale)/2;
+//     yMax = mouseY_ + ((yMax-yMin)/scale)/2;
+//     yMin = mouseY_ - ((yMax-yMin)/scale)/2;
+// }
 
-function draw() {
-    console.log(width);
- // put drawing code here
-}
 
-function plotMandelBrot(){
-    isJulia = false;
-    createCanvas(innerWidth,innerWidth);
-    iterations = parseInt(document.getElementById('iterationsMB').value);
-    upperBound = parseInt(document.getElementById('upperBoundMB').value);
-    //load pixel array
-    pixelDensity(1);
-    loadPixels();
+var sketch = function(p){
+    p.setup = function(){
+        var div_width = document.getElementById("sketchContainer").offsetWidth;
+        console.log(div_width);
+        p.pixelDensity(1);
+        p.createCanvas(div_width, div_width);
+        p.background(100)
+        p.plotMandelBrot(div_width, div_width, 0.7, -2, 1.35, -1.35);
+        p.noLoop();
+        
+        // var cReal;
+        // var cComplex;
+        // if(document.getElementById("cartesian").checked){
+        //     cReal = parseFloat(document.getElementById('cReal').value);
+        //     cComplex = parseFloat(document.getElementById('cComplex').value);
+        // }else{
+        //     var r = parseFloat(document.getElementById('cR').value);
+        //     var theta = PI*parseFloat(document.getElementById('cTheta').value);
+        //     cReal = r*cos(theta);
+        //     cComplex = r*sin(theta);
+        // }
+        // var jul = new JuliaPlot(innerWidth,
+        //                         innerWidth,
+        //                         parseInt(document.getElementById('iterationsJulia').value),
+        //                         parseInt(document.getElementById('upperBoundJulia').value),
+        //                         cReal,
+        //                         cComplex
+        //                         );
+        
+        
+        // var new_pixels = mb.plot();
+        // for(var i=srv
+        
+    };
+    p.plotMandelBrot = function(arg_width, arg_height, x_max, x_min, y_max, y_min){
+        var canvas = p.createGraphics(arg_width, arg_height);
     
-    for(let x=0;x<width;x++){
-        for(let y=0;y<height;y++){
-            var x_ = map(x,0,width,xMin,xMax);
-            var y_ = map(y,0,height,yMax, yMin);
-            colorVal = mandelBrotSet(iterations,upperBound,x_,y_);
+        const mb = new MandelBrotPlot(arg_width,
+            arg_width,
+            parseInt(document.getElementById('iterationsMB').value),
+            parseInt(document.getElementById('upperBoundMB').value),
+            x_max,
+            x_min,
+            y_max,
+            y_min
+            );
+        
+        var worker = new Worker('MandelBrotWorker.js');
+    
+        console.log("parent , sending message, mb.computed = " + mb.computed);
+        
+        worker.postMessage(mb);
+        
+        worker.onmessage = function(event){
+            console.log("parent, message recieved, mb.computed = " + event.data.computed);
             
-            pixelIndex = (x + y*width)*4;
-            if(colorVal>255){
-                pixels[pixelIndex + 0] = 255;
-                pixels[pixelIndex + 1] = 118;
-                pixels[pixelIndex + 2] = 40;
-                pixels[pixelIndex + 3] = 255;
-            }else{
-                pixels[pixelIndex + 0] = colorVal;
-                pixels[pixelIndex + 1] = colorVal;
-                pixels[pixelIndex + 2] = colorVal;
-                pixels[pixelIndex + 3] = 255;
+            canvas.pixelDensity(1);
+            canvas.loadPixels();
+            for(var i = 0; i<canvas.pixels.length ; ++i){
+                canvas.pixels[i] = event.data.pixels[i];
             }
-        }
+            canvas.updatePixels();
+            console.log("Pixels Upadted");
+            p.image(canvas, 0, 0);
+        };
     }
-    updatePixels();
+    
+    
 }
 
-function plotJulia(){
-    createCanvas(innerWidth, innerWidth);
-    iterations = parseInt(document.getElementById('iterationsJulia').value);
-    upperBound = parseInt(document.getElementById('upperBoundJulia').value);
-    if(document.getElementById("cartesian").checked){
-        cReal = parseFloat(document.getElementById('cReal').value);
-        cComplex = parseFloat(document.getElementById('cComplex').value);
-    }else{
-        var r = parseFloat(document.getElementById('cR').value);
-        var theta = PI*parseFloat(document.getElementById('cTheta').value);
-        cReal = r*cos(theta);
-        cComplex = r*sin(theta);
-    }
-    //load pixel array
-    pixelDensity(1);
-    loadPixels();
-    for(let x=0;x<width;x++){
-        for(let y=0;y<height;y++){
-                var x_ = map(x,0,width,-1.7,1.7);
-                var y_ = map(y,0,height,1.7,-1.7);
-                colorVal = 
-                juliaSet(100,50,cReal,cComplex,x_,y_)
-
-                pixelIndex = (x + y*width)*4;
-                if(colorVal>255){
-                    pixels[pixelIndex + 0] = 255;
-                    pixels[pixelIndex + 1] = 118;
-                    pixels[pixelIndex + 2] = 40;
-                    pixels[pixelIndex + 3] = 255;
-                }else{
-                    pixels[pixelIndex + 0] = colorVal;
-                    pixels[pixelIndex + 1] = colorVal;
-                    pixels[pixelIndex + 2] = colorVal;
-                    pixels[pixelIndex + 3] = 255;
-                }
-        }
-    }
-    updatePixels();
-    isJulia = true;
-}
-
-function mandelBrotSet(iterations, upperBound, cRealPart, cComplexPart){
-    realPart = 0;
-    complexPart = 0;
-    for(var i =1;i<=iterations;i++){
-        realPartNext = (realPart*realPart - complexPart*complexPart) + cRealPart;
-        complexPartNext = (2*realPart*complexPart) + cComplexPart;   //Z(n+1) = Z(n)*Z(n) + c
-        
-        realPart = realPartNext;
-        complexPart = complexPartNext;
-        
-        if(sqrt(realPartNext*realPartNext + complexPartNext*complexPartNext)>upperBound){
-            break;
-        }
-    }
-    let colorVal = map(i,1,iterations,0,255);
-    return colorVal;
-}
-
-function juliaSet(iterations, upperBound, cRealPart, cComplexPart, x, y){
-    realPart = x;
-    complexPart = y;
-    for(var i =1;i<=iterations;i++){
-        realPartNext = (realPart*realPart - complexPart*complexPart) + cRealPart;
-        complexPartNext = (2*realPart*complexPart) + cComplexPart;   //Z(n+1) = Z(n)*Z(n) + c
-        
-        realPart = realPartNext;
-        complexPart = complexPartNext;
-        
-        if(sqrt(realPartNext*realPartNext + complexPartNext*complexPartNext)>upperBound){
-            break;
-        }
-    }
-    let colorVal = map(i,1,iterations,0,255);
-//    if(colorVal>100){ 
-//        console.log(colorVal);
-//    }
-    return colorVal;
-}
-
-function reset(){
-    xMax = 0.7;
-    xMin = -2;
-    yMax = 1.35;
-    yMin = -1.35;
-    plotMandelBrot();
-}
-
-function doubleClicked(){
-    var mouseX_ = map(mouseX, 0, width, xMin, xMax);
-    var mouseY_ = map(mouseY, 0, height, yMax, yMin);
-    var scale = parseFloat(document.getElementById("scalingFactor").value)
-    console.log(scale);
-    xMax = mouseX_ + ((xMax-xMin)/scale)/2;
-    xMin = mouseX_ - ((xMax-xMin)/scale)/2;
-    yMax = mouseY_ + ((yMax-yMin)/scale)/2;
-    yMin = mouseY_ - ((yMax-yMin)/scale)/2;
-    plotMandelBrot();
-}
+new p5(sketch, 'sketchContainer');
