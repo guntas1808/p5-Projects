@@ -26,7 +26,7 @@ function compute(c_real_part, c_complex_part, iterations, upper_bound){
 
 
 function plot(pixels, arg_width, arg_height, cartesian_bounds, iterations, upper_bound){
-    console.log(cartesian_bounds);
+    console.log(cartesian_bounds, pixels.length, arg_height, arg_width);
                 
     for(var x=0; x < arg_width; x++){
         for(var y=0; y < arg_height; y++){

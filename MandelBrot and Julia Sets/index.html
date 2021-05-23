@@ -5,113 +5,131 @@
        <meta charset="utf-8">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <title>MandelBrot & Julia Sets</title>
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+       <link rel="stylesheet" href="style.css">
+
 </head>
 
-<body>
-       
-       <h1>MandelBrot and Julia Sets</h1>
+<body class="body">
        <nav>
-              <ul>
-                     <li>MandelBrot Set</li>
-                     <li>Julia Set</li>
-              </ul>
+
        </nav>
-       <div>
-              <div class="outerContainerMandelBrot">
-                     <div>
-                            <label for="iterations">Iterations:</label>
-                            <input type="number"
-                                   id="iterations_mandelbrot"
-                                   value="100">
-                            <label for="upper_bound">Upper Bound:</label>
-                            <input type="number"
-                                   id="upper_bound_mandelbrot"
-                                   value="2">
+       <header>
+
+       </header>
+       <section class="container-main">
+              <div class="sidebar">
+                     <div class="tab-container">
+                            <div id="mb-tab" class="tab active">
+                                   Mandel Brot Set
+                            </div>
+                            <div id="j-tab" class="tab">
+                                   Julia Set
+                            </div>
                      </div>
-                     <div>
-                            <label for="scaling_factor">Scaling Factor:</label>
-                            <input type="text"
-                                   name="scaling_factor_mandelbrot"
-                                   id="scaling_factor"
-                                   value="2">
-                            <input type="button"
-                                   value="Reset Zoom"
-                                   onclick="sketch.resetScaling()">
-                            <input type="button"
-                                   value="Zoom Out"
-                                   onclick="sketch.zoomOut()">
+                     <!-- Mandel Brot Set -->
+                     <div id="mb-tab-content" class="tab-content  show">
+                            <div class="tab-content-item">
+                                   <label for="iterations-mb" class="label">Iterations:</label>
+                                   <input id="iterations-mb"
+                                          type="number"
+                                          class="input-box"
+                                          value=100>
+                            </div>
+                            <div class="tab-content-item">
+                                   <label for="upper-bound-mb" class="label">Upper Bound:</label>
+                                   <input id="upper-bound-mb"
+                                          type="number"
+                                          class="input-box"
+                                          value = 2>
+                            </div>
+                            <div class="tab-content-item">
+                                   <a href="#" id="plot-mb" class="btn single-btn">Plot</a>
+                            </div>
                      </div>
-                     <div>
-                            <input type="button"
-                                   value="Plot MandelBrot Set"
-                                   onclick="sketch.plotMandelBrotUtil()">
+                     <!-- Julia Set -->
+                     <div id="j-tab-content" class="tab-content">
+                            <div class="tab-content-item">
+                                   <label for="iterations-j" class="label">Iterations:</label>
+                                   <input id="iterations-j"
+                                          type="number"
+                                          class="input-box"
+                                          value="1000">
+                            </div>
+                            <div class="tab-content-item">
+                                   <label for="upper-bound-j" class="label">Upper Bound:</label>
+                                   <input id="upper-bound-j"
+                                          type="number"
+                                          class="input-box"
+                                          value="2">
+                            </div>
+                            <label class="label">Constant</label>
+                            <div class="tab-content-item">
+                                   <input id="const-j-cart"
+                                          type="radio"
+                                          class="radio"
+                                          checked="true"
+                                          name="const-form">
+                                   <label for="const-j-cart" class="label">Cartesain Form</label>
+                            </div>
+                            <div class="tab-content-item">
+                                   <label for="const-j-real" class="label">Real Part:</label>
+                                   <input id="const-j-real"
+                                          type="number"
+                                          class="input-box"
+                                          value="0.320">
+                            </div>
+                            <div class="tab-content-item">
+                                   <label for="const-j-complex" class="label">Complex Part:</label>
+                                   <input id="const-j-complex"
+                                          type="number"
+                                          class="input-box"
+                                          value="0.411">
+                            </div>
+                            <div class="tab-content-item">
+                                   <input id="const-j-pol"
+                                          type="radio"
+                                          class="radio"
+                                          name="const-form">
+                                   <label for="const-j-pol" class="label">Polar Form</label>
+                            </div>
+                            <div class="tab-content-item">
+                                   <label for="const-j-rad" class="label">Radius(r):</label>
+                                   <input id="const-j-rad"
+                                          type="number"
+                                          class="input-box"
+                                          value="0.754">
+                            </div>
+                            <div class="tab-content-item">
+                                   <label for="const-j-angle" class="label">Angle(θ):</label>
+                                   <input id="const-j-angle"
+                                          type="number"
+                                          class="input-box"
+                                          value="1.100">
+                            </div>
+                            <div class="tab-content-item">
+                                   <a href="#" id="plot-j" class="btn single-btn">Plot</a>
+                            </div>
+                     </div>
+                     <!-- Scaling -->
+                     <div id="common-tab-content" class="tab-content show">
+                            <label class="label">Scaling</label>
+                            <div class="tab-content-item">
+                                   <label for="scaling-factor" class="label">Scaling Factor:</label>
+                                   <input id="scaling-factor"
+                                          type="number"
+                                          class="input-box"
+                                          value="5">
+                            </div>
+                            <div class="tab-content-item">
+                                   <a href="#" id="zoom-in" class="btn">Zoom In</a>
+                                   <a href="#" id="zoom-out" class="btn">Zoom Out</a>
+                                   <a href="#" id="reset" class="btn"> Reset </a>
+                            </div>
                      </div>
               </div>
-              <div class="outerContainerJulia">
-                     <div>
-                            <label for="iterations_julia">Iterations:</label>
-                            <input type="number"
-                                   id="iterations_julia"
-                                   value="100">
-                            <label for="upper_bound_julia">Upper Bound:</label>
-                            <input type="number"
-                                   id="upper_bound_julia"
-                                   value="2">
-                     </div>
-                     <div>
-                            <!-- <label for="scaling_factor">Scaling Factor:</label>
-                            <input type="number"
-                                   name="scaling_factor_julia"
-                                   id="scaling_factor"
-                                   value="2">
-                            <input type="button"
-                                   value="Reset Scaling"
-                                   onclick="sketch.resetScaling()"> -->
-                     </div>
-                     <div>
-                            <input type="radio"
-                                   name="coordinate_system"
-                                   id="cartesian"
-                                   checked="true">
-                            <label for="cartesian">Cartesian</label> <br>
-                            <label for="c_real">Real Part:</label>
-                            <input type="number"
-                                   name="real_part"
-                                   id="c_real"
-                                   value="0.321">
-                            <label for="c_complex">Complex Part:</label>
-                            <input type="number"
-                                   name="complex_part"
-                                   id="c_complex"
-                                   value="0.544">
-                     </div>
-                     <div>
-                            <input type="radio"
-                                   name="coordinate_system"
-                                   id="polar">
-                            <label for="polar">Polar</label> <br>
-                            <label for="c_r">Radius(r):</label>
-                            <input type="number"
-                                   name="radius"
-                                   id="c_r">
-                            <label for="c_theta">Angle(θ):</label>
-                            <input type="number"
-                                   name="angle"
-                                   id="c_theta">
-                     </div>
-                     <div>
-                            <input type="button"
-                                   value="Plot Julia Set"
-                                   onclick="sketch.plotJuliaUtil()">
-                     </div>
-              </div>
-       </div>
-       <div id="sketchContainer"
-              style="width: 100%;height: width;"
-              ondblclick="sketch.zoomIn(sketch.mouseX, sketch.mouseY)">
-       </div>
-       
+
+              <div id="sketch-container" class="sketch-container"></div>
+       </section>
     
 <!--    javascript-->
     <script src="../p5.js"></script>

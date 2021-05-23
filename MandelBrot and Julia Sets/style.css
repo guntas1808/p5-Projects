@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Padauk&display=swap');
+
+.body {
+    /* background-color: rgb(41, 43, 48); */
+    font-family: Padauk, sans-serif;
+    color: #fff;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container-main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar {
+    width: 25%;
+    height: 100vh;
+    background-color: rgb(41, 43, 48);
+}
+
+.tab-container {
+    /* padding: 0 0.5rem; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    background-color: rgb(17, 17, 22);
+}
+
+.tab {
+    padding: 0.6rem 1.2rem;
+    border-bottom: 3px solid rgb(17, 17, 22);
+    width: 50%;
+}
+
+.tab:hover {
+    animation-duration: 10ms;
+    background-color: rgb(26, 27, 29);
+    border-bottom: 3px solid rgb(26, 27, 29);
+    cursor: pointer;
+}
+
+.tab.active {
+    border-bottom: 3px solid rgb(88, 89, 170);
+}
+
+/* tab contents */
+
+.tab-content {
+    display: none;
+}
+
+.tab-content .label {
+    width: 100%;
+    font-size: 1.7rem;
+    color: #fff;
+}
+
+.tab-content.show{
+    padding: 1rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.tab-content-item {
+    padding: 0.5rem 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: cen;
+}
+
+.tab-content-item .label {
+    width: 40%;
+    font-size: 1rem;
+    color: rgb(199, 199, 199);
+}
+
+.tab-content-item .input-box {
+    width: 60%;
+    border-radius: 5px;
+    border: none;
+    padding: 0 0.4rem;
+}
+
+.tab-content-item .btn {
+    width: 33%;
+    text-align: center;
+    
+    text-decoration: none ;
+    margin: 0 0.3rem;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background-color: rgb(21, 22, 78);
+    border-radius: 10px;
+}
+
+.tab-content-item .btn:hover {
+    background-color: rgb(10, 10, 32);
+}
+
+.tab-content-item .btn.single-btn {
+    width: 40%;
+    margin: auto;
+}
+
+.tab-content-item .radio {
+    width: 30px;
+}
+
+.sketch-container {
+    width: 75%;
+    height: 100vh;
+}
