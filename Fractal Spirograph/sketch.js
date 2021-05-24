@@ -9,7 +9,7 @@ let setMethods = function(p) {
     p.radiusReduction;
     p.baseRadius;
     p.dt = 1/30;
-    p.baseAngularVal;
+    p.baseAngularVelocity;
 
     p.setup = function(){
         p.levels = parseInt(document.getElementById("levels").value);
@@ -17,7 +17,7 @@ let setMethods = function(p) {
         p.radiusReduction = parseFloat(document.getElementById("radius-reduction").value);
         p.k = parseInt(document.getElementById("k").value);
         // p.dt = parseFloat(document.getElementById("time-per-frame").value);
-        p.baseAngularVal = parseFloat(document.getElementById("base-angular-vel").value);
+        p.baseAngularVelocity = parseFloat(document.getElementById("base-angular-vel").value);
 
         p.div_width = document.getElementById('sketch-container').offsetWidth;
         p.div_height = document.getElementById('sketch-container').offsetHeight;
@@ -30,7 +30,7 @@ let setMethods = function(p) {
                         p.width/2,
                         p.height/2,
                         p.baseRadius,
-                        p.baseAngularVal,
+                        p.baseAngularVelocity,
                         p.k,
                         1
                     );
@@ -40,7 +40,7 @@ let setMethods = function(p) {
             next.addChild(
                         p,
                         next.radius/p.radiusReduction,
-                        p.baseAngularVal,
+                        p.baseAngularVelocity,
                         p.k
                     );
             next = next.child;
