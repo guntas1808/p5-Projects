@@ -266,8 +266,6 @@ let setMethods = function(p){
 
 let sketch = new p5(setMethods, 'sketch-container');
 
-const sketch_container = document.getElementById("sketch-container");
-
 window.onresize = function(){sketch.setup();}
 
 document.getElementById("sketch-container").ondblclick = function(){sketch.zoomIn(sketch.mouseX, sketch.mouseY);}

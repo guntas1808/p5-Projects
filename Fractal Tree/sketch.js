@@ -1,4 +1,4 @@
-  function setMethods(p){
+let setMethods = function(p){
     p.trunkLength=innerHeight/3;
     p.lengthReductionFactor;
     p.angleVal;
@@ -7,24 +7,24 @@
     p.isUniform;
 
     p.setup = function() {
-        var div = document.getElementById('sketchContainer');
-        p.createCanvas(div.offsetWidth, div.offsetWidth-100);
+        var div = document.getElementById('sketch-container');
+        p.createCanvas(div.offsetWidth, div.offsetHeight);
     }
 
     p.draw = function() {
-        var div = document.getElementById('sketchContainer');
-        p.resizeCanvas(div.offsetWidth, div.offsetWidth-100);
+        var div = document.getElementById('sketch-container');
+        p.resizeCanvas(div.offsetWidth, div.offsetHeight);
         //fractal tree characteristics
         p.branches = parseInt(document.getElementById("branches").value); //default 4
         p.levelLim = parseInt(document.getElementById("levels").value)-1; //default 4
-        p.lengthReductionFactor = parseFloat(document.getElementById("lengthFactor").value); //default 0.6
-        p.isUniform = document.getElementById("isUniform").checked; //default true
+        p.lengthReductionFactor = parseFloat(document.getElementById("length-factor").value); //default 0.6
+        p.isUniform = document.getElementById("is-uniform").checked; //default false
         p.angleVal = parseFloat(document.getElementById("angle").value);
         
         p.background(255,200,54);
         p.stroke(0);
         p.strokeWeight(2);
-        p.translate(innerWidth/2,innerHeight-100);
+        p.translate(p.width/2,p.height);
         p.rotate(Math.PI);
         p.line(0,0,0,p.trunkLength);
         p.translate(0,p.trunkLength);
@@ -105,4 +105,20 @@
     }
 }
 
-var sketch = new p5(setMethods, "sketchContainer")
+var sketch = new p5(setMethods, "sketch-container")
+
+function toggleAngleSlider(e){
+    if(this.checked){
+        document.getElementById("angle-slider").classList.add('hide');
+        document.getElementById("angle-label").classList.add('hide');
+    }else{
+        document.getElementById("angle-slider").classList.remove('hide');
+        document.getElementById("angle-label").classList.remove('hide');
+    }
+}
+
+document.getElementById("is-uniform").addEventListener('change', toggleAngleSlider)
+
+document.getElementById("start").addEventListener('click', e => sketch.loop());
+
+document.getElementById("stop").addEventListener('click', e => sketch.noLoop());

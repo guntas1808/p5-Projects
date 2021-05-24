@@ -1,88 +1,96 @@
 <!DOCTYPE html>
-<html lang="">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fractal Tree</title>
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-  </style>
-  <link rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous">
-  <script src="../p5.js"></script>
-  <script src="sketch.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal Tree</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
+<body class="body">
+    <nav>
 
-<body>
-  <div style="padding: 10px;padding-right: 20px;padding-left: 20px;">
-    <div class="row">
-      <div class="col-sm">
-        <label for="branches">Branches(1-10)</label>
-        <input type="range"
-              min="1"
-              max="10"
-              value="4"
-              step="1"
-              class="form-control-range md-col-6"
-              id="branches">
-      </div>
-      <div class="col-sm">
-        <label for="levels">Levels(1-10)</label>
-        <input type="range"
-              min="1"
-              max="10"
-              value="4"
-              step="1"
-              class="form-control-range"
-              id="levels">
-      </div>
-      <div class="col-sm">
-        <label for="lengthFactor">Length Reduction Factor</label>
-        <input type="range"
-              min="0"
-              max="1"
-              value="0.6"
-              step="0.01"
-              class="form-control-range"
-              id="lengthFactor">
-      </div>
-    </div>
-    <div class="row">  
-      <div class="col-sm-3" style="padding-top: 20px;">
-        <input type="checkbox"
-              id="isUniform"
-              class="form-check-inline">
-        <label for="idUniform" class="form-check-label">Uniform Fractal Tree</label>
-      </div>
-      <div class="col-sm-7" style="padding-left: 0;">
-        <label for="angle">Angle</label>
-        <input type="range"
-              min="0"
-              max="6.28"
-              value="1"
-              step="0.0000001"
-              class="form-control-range"
-              id="angle">
-      </div>
-      <div class="col-sm-1" style="padding-top: 20px;">
-        <input type="button"
-              value="Stop!"
-              class="btn btn-success">
-      </div>
-      <div class="col-sm-1" style="padding-top: 20px;">
-        <input type="button"
-              value="Start!"
-              class="btn btn-success">
-      </div>
-    </div>
-  </div>
-  <div id="sketchContainer" style="width:100%"></div>
+    </nav>
+    <header>
+
+    </header>
+    <section class="container-main">
+        <div class="sidebar">
+            <div class="tab-container">
+                <div class="tab active">
+                    Fractal Tree
+                </div>
+            </div>
+            <div class="tab-content show">
+                <div class="tab-content-item">
+                    <label for="branches" class="label">Branches:</label>
+                </div>
+                <div class="tab-content-item">
+                    <input type="range"
+                            id="branches"
+                            class="range"
+                            min="1"
+                            max="10"
+                            step="1"
+                            value="4">
+                </div>
+                <div class="tab-content-item">
+                    <label for="levels" class="label">Levels:</label>
+                </div>
+                <div class="tab-content-item">
+                    <input type="range"
+                            id="levels"
+                            class="range"
+                            min="1"
+                            max="10"
+                            step="1"
+                            value="6">
+                </div>
+                <div class="tab-content-item">
+                    <label for="length-factor" class="label">Length Reduction Factor:</label>
+                </div>
+                <div class="tab-content-item">
+                    <input type="range"
+                            id="length-factor"
+                            class="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value="0.65">
+                </div>
+                <div class="tab-content-item">
+                    <input type="checkbox"
+                            class="checkbox"
+                            id="is-uniform">
+                    <label for="is-uniform" class="label">Uniform Branching Angles</label>
+                </div>
+                <div id="angle-label" class="tab-content-item">
+                    <label for="angle" class="label">Branching Angle:</label>
+                </div>
+                <div id="angle-slider" class="tab-content-item">
+                    <input type="range"
+                            id="angle"
+                            class="range"
+                            min="0"
+                            max="6.28"
+                            step="0.0000001"
+                            value="0.7">
+                    </div>
+                </div>
+                <div class="tab-content-item">
+                    <a href="#" id="start" class="btn">Start!</a>
+                    <a href="#" id="stop" class="btn">Stop!</a>
+                </div>
+            </div>
+        </div>
+        <div id="sketch-container" class="sketch-container"></div>
+    </section>
+
+
+    
+    <!--    javascript-->
+    <script src="../p5.js"></script>
+    <script src="sketch.js"></script>
 </body>
-
 </html>

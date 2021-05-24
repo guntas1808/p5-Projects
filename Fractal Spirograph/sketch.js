@@ -1,112 +1,114 @@
-var base;
-var next;
-var path =[];
-var isComplete = false;
-var displayConstructor = false;
-//spirograph parameters
-var k;
-var levels;
-var radiusReduction=3;
-var baseRadius;
-var dt;
-function setup() {
-    levels = parseInt(document.getElementById("levels").value);
-    baseRadius = parseInt(document.getElementById("baseRadius").value);
-    radiusReduction = parseFloat(document.getElementById("radiusRed").value);
-    k = parseInt(document.getElementById("k").value);
-    dt = parseFloat(document.getElementById("time").value);
-    
-    createCanvas(innerWidth, innerHeight);
-    base = new Circle(innerWidth/2,innerHeight/2,baseRadius,1);
-    
-    next = base;
-    for(var i=1;i<levels;++i){
-        next.addChild(next.radius/radiusReduction);
-        next = next.child;
-    }
-    
-}
+let setMethods = function(p) {
+    p.base;
+    p.path =[];
+    p.isComplete = false;
+    p.displayConstructor = false;
+    //spirograph parameters
+    p.k;
+    p.levels;
+    p.radiusReduction;
+    p.baseRadius;
+    p.dt = 1/30;
+    p.baseAngularVal;
 
+    p.setup = function(){
+        p.levels = parseInt(document.getElementById("levels").value);
+        p.baseRadius = parseInt(document.getElementById("base-radius").value);
+        p.radiusReduction = parseFloat(document.getElementById("radius-reduction").value);
+        p.k = parseInt(document.getElementById("k").value);
+        // p.dt = parseFloat(document.getElementById("time-per-frame").value);
+        p.baseAngularVal = parseFloat(document.getElementById("base-angular-vel").value);
 
-function draw() {
-    displayConstructor = document.getElementById("display").checked;
-    console.log(frameRate);
-    createCanvas(innerWidth, innerHeight);
-    background(0);
-    fill(0);
-    if(displayConstructor){
-        stroke(255);
-    }else{
-        stroke(0);
-    }
-    if(base.angle> 2*PI){
-        isComplete=true; //the shape is complete when base angle reaches 2*pi
-    }
-    
-    next = base;
-    for(var i=0;i<(levels+1);++i){
-        if(!isComplete){
-            next.update();
+        p.div_width = document.getElementById('sketch-container').offsetWidth;
+        p.div_height = document.getElementById('sketch-container').offsetHeight;
+        
+        // p.frameRate(30);
+
+        p.createCanvas(p.div_width, p.div_height);
+        p.base = new Circle(
+                        p,
+                        p.width/2,
+                        p.height/2,
+                        p.baseRadius,
+                        p.baseAngularVal,
+                        p.k,
+                        1
+                    );
+        
+        let next = p.base;
+        for(let i=1;i<p.levels;++i){
+            next.addChild(
+                        p,
+                        next.radius/p.radiusReduction,
+                        p.baseAngularVal,
+                        p.k
+                    );
+            next = next.child;
         }
-        next.show();
-        if(next.child==null)break;
-        next = next.child;            //    draw the circles
-    }
-    
-    if(!isComplete){
-        append(path,createVector(next.x,next.y))   //add point to vector list if shape incomplete
     }
 
-    stroke(255,100,100);
-    noFill();
-    strokeWeight(2)
-    
-    beginShape();
-    for(var i=0;i<path.length;++i){
-        vertex(path[i].x,path[i].y);  //draw shape using the vector list
-    }
-    if(isComplete){
-        vertex(path[0].x,path[0].y);
-    }
-    endShape();
-   
-}
 
-function reDraw(){
-    background(0);
-    path = [];
-    base = null;
-    isComplete = false;
-    setup();
-}
-
-class Circle{
-    constructor(x, y, radius, n, parent=null){
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.angle = 0;
-        this.n = n;
-        this.angularVelocity =  radians(pow(k,n-1));
-        this.parent = parent;
-        this.child = null;
-    }
-    
-    addChild(radius){
-        this.child = new Circle(this.x+(this.radius+radius)*cos(this.angle),this.y-(this.radius+radius)*sin(this.angle),radius, this.n+1,this)
-    }
-    
-    show(){
-        noFill();
-        ellipse(this.x,this.y,this.radius*2,this.radius*2);
-    }
-    
-    update(){
-        if(this.parent!=null){
-            this.x = this.parent.x+(this.parent.radius+this.radius)*cos(this.parent.angle);
-            this.y = this.parent.y-(this.parent.radius+this.radius)*sin(this.parent.angle);
+    p.draw = function(){
+        p.displayConstructor = document.getElementById("display").checked;
+        console.log(p.frameRate());
+        
+        p.div_width = document.getElementById('sketch-container').offsetWidth;
+        p.div_height = document.getElementById('sketch-container').offsetHeight;
+        
+        p.resizeCanvas(p.div_width, p.div_height);
+        p.background(0);
+        p.fill(0);
+        if(p.displayConstructor){
+            p.stroke(255);
+        }else{
+            p.stroke(0);
         }
-        this.angle+=this.angularVelocity*dt;
-        return;
+        if(p.base.angle> 2*Math.PI){
+            p.isComplete=true; //the shape is complete when p.base angle reaches 2*pi
+        }
+        
+        let next = p.base;
+        for(let i=0;i<(p.levels);++i){
+            if(!p.isComplete){
+                next.update(p.dt);
+            }
+            next.show(p);
+            if(next.child==null)break;
+            next = next.child;            //    draw the circles
+        }
+        
+        if(!p.isComplete){
+            p.append(p.path,p.createVector(next.x,next.y))   //add point to vector list if shape incomplete
+        }
+
+        p.stroke(255,100,100);
+        p.noFill();
+        p.strokeWeight(2)
+        
+        p.beginShape();
+        for(let i=0;i<p.path.length;++i){
+            p.vertex(p.path[i].x,p.path[i].y);  //draw shape using the vector list
+        }
+        if(p.isComplete){
+            p.vertex(p.path[0].x,p.path[0].y);
+        }
+        p.endShape();
+    
     }
+
+    p.reDraw = function(){
+        p.background(0);
+        p.path = [];
+        p.base = null;
+        p.isComplete = false;
+        p.setup();
+    }
+
 }
+let sketch = new p5(setMethods, 'sketch-container');
+
+document.getElementById('draw').addEventListener('click', e => sketch.reDraw());
+
+document.getElementById('display').addEventListener('change', e => sketch.displayConstructor = true);
+
+window.addEventListener('resize', e => sketch.reDraw());
